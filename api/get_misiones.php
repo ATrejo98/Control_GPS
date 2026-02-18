@@ -28,6 +28,8 @@ try {
     LEFT JOIN gps_dispositivos g ON m.gps_id = g.id
     ORDER BY m.fecha_inicio DESC";
 
+
+
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $misiones = $stmt->fetchAll(PDO::FETCH_ASSOC);

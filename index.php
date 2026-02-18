@@ -2240,6 +2240,8 @@ try {
                         </div>
                     </div>
 
+
+                    
                     <!-- SECCIÓN 2: DESCRIPCIÓN Y DETALLES -->
                     <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(5, 150, 105, 0.05)); padding: 1.5rem; border-radius: 16px; margin-bottom: 1.5rem; border-left: 4px solid var(--success);">
                         <h4 style="font-size: 0.9rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--success); text-transform: uppercase; letter-spacing: 0.5px;">

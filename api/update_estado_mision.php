@@ -59,6 +59,8 @@ WHERE id = ?";
         $mision_id
     ]);
 
+    
+
     $stmt = $conn->prepare($sql);
     $resultado = $stmt->execute([
         $nuevo_estado,
