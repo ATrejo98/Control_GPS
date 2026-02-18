@@ -2920,7 +2920,10 @@ try {
                     <td>${gps.modelo || '-'}</td>
                     <td><span class="badge ${estadoClass}">${estadoTexto}</span></td>
                     <td>${ubicacion}</td>
-                    <td>-</td>
+                   <td>${(() => {
+                    const asignacion = Array.isArray(asignaciones) ? asignaciones.find(a => parseInt(a.gps_id) === parseInt(gps.id) && a.estado === 'asignado') : null;
+                    return asignacion ? asignacion.custodio_nombre : '-';
+})()}</td>
                     <td>
                         <div class="btn-group">
                             <button class="btn" onclick="editarGPS(${gps.id})" style="padding: 0.5rem 1rem; background-color: #fbbf24; color: #000; font-weight: 600; border-radius: 8px; border: none; cursor: pointer;">
@@ -3799,14 +3802,12 @@ try {
 
             let html = '';
             misiones.forEach(mision => {
-                const estadoClass = mision.estado === 'pendiente' ? 'badge-info' :
-                    mision.estado === 'posicionado' ? 'badge-warning' :
+                const estadoClass = mision.estado === 'posicionado' ? 'badge-warning' :
                     mision.estado === 'en_ruta' ? 'badge-danger' :
                     mision.estado === 'finalizada' ? 'badge-success' :
                     mision.estado === 'completada' ? 'badge-success' : 'badge-secondary';
 
                 const estadoTexto = {
-                    'pendiente': '⏳ Pendiente',
                     'posicionado': '📍 Posicionado',
                     'en_ruta': '🚗 En Ruta',
                     'finalizada': '✅ Finalizada',
@@ -3902,7 +3903,7 @@ try {
                     const badgeEstado = fila.querySelector('.badge');
                     const estadoActual = badgeEstado ? badgeEstado.textContent.toLowerCase() : '';
 
-                    if (estado === 'en_progreso' && (estadoActual.includes('pendiente') || estadoActual.includes('en curso'))) {
+                    if (estado === 'en_progreso' && (estadoActual.includes('en_ruta') || estadoActual.includes('en curso'))) {
                         fila.style.display = '';
                     } else if (estado === 'completada' && estadoActual.includes('completada')) {
                         fila.style.display = '';
@@ -4122,11 +4123,6 @@ try {
 
             // Determinar color del estado
             const estadoColors = {
-                'pendiente': {
-                    bg: '#fef3c7',
-                    text: '#92400e',
-                    icon: '⏳'
-                },
                 'posicionado': {
                     bg: '#dbeafe',
                     text: '#1e40af',
@@ -4407,10 +4403,7 @@ try {
             const mision = misiones.find(m => parseInt(m.id) === parseInt(misionId));
             if (!mision) return;
 
-            const estados = [{
-                    valor: 'pendiente',
-                    label: '⏳ Pendiente'
-                },
+            const estados = [
                 {
                     valor: 'posicionado',
                     label: '📍 Posicionado'
